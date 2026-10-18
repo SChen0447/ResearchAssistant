@@ -11,7 +11,7 @@ def get_tavily():
     return _tavily
 
 @tool
-def web_search(query: str) -> str:
+async def web_search(query: str) -> str:
     """
     联网搜索，返回相关结果
 
@@ -21,7 +21,7 @@ def web_search(query: str) -> str:
         相关网页片段
     """
     tavily = get_tavily()
-    results = tavily.invoke({"query": query})
+    results = await tavily.ainvoke({"query": query})
     if not results:
         return "没有找到相关结果"
     

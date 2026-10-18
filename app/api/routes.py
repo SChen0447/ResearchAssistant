@@ -10,8 +10,8 @@ def health() -> dict:
 
 
 @router.post("/ask")
-def ask(req: AskRequest, request: Request) -> AskResponse:
-    answer = request.app.state.agent_service.ask(
+async def ask(req: AskRequest, request: Request) -> AskResponse:
+    answer = await request.app.state.agent_service.ask(
         question = req.question,
         user_id = req.user_id,
         session_id = req.session_id,

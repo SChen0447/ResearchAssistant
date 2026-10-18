@@ -18,7 +18,7 @@ def get_retriever():
 
 
 @tool
-def knowledge_search(query: str) -> str:
+async def knowledge_search(query: str) -> str:
     """
     搜索机器学习知识库，当用户问题涉及到本地知识库相关内容时使用
 
@@ -28,7 +28,7 @@ def knowledge_search(query: str) -> str:
         相关文档片段
     """
     retriever = get_retriever()
-    docs = retriever.invoke(query)
+    docs = await retriever.ainvoke(query)
 
     results = []
     for i, doc in enumerate(docs, 1):
