@@ -27,7 +27,7 @@ htmlcov/
 
 # ---------- IDE / 编辑器 ----------
 .idea/
-.vscode/
+.vscode/ 
 .trea/
 *.swp
 
