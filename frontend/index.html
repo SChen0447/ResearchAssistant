@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>研究助手</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark">RA</span>
+        <div class="brand-text">
+          <h1>研究助手</h1>
+          <p>知识库检索 · 联网搜索</p>
+        </div>
+      </div>
+      <button id="new-chat" class="btn-ghost" type="button">新对话</button>
+    </header>
+
+    <main id="messages" class="messages">
+      <section class="empty-state" id="empty-state">
+        <h2>开始你的研究</h2>
+        <p>可以询问本地机器学习知识库，或让我联网检索最新资料。</p>
+        <div class="suggestions">
+          <button class="suggestion" type="button" data-q="什么是贝叶斯公式？">什么是贝叶斯公式？</button>
+          <button class="suggestion" type="button" data-q="请解释极大似然估计">请解释极大似然估计</button>
+          <button class="suggestion" type="button" data-q="集成学习中 Bagging 和 Boosting 的区别">Bagging 和 Boosting 的区别</button>
+          <button class="suggestion" type="button" data-q="给我找几篇近几年多目标优化的论文">近几年多目标优化论文</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="composer">
+      <div class="composer-inner">
+        <textarea id="input" rows="1" placeholder="输入你的问题，Enter 发送，Shift + Enter 换行"></textarea>
+        <button id="send" class="btn-send" type="button" aria-label="发送">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 12h13M12 6l6 6-6 6" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <p class="hint">研究助手可能会出错，请核对关键信息。</p>
+    </footer>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
