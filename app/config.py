@@ -14,16 +14,16 @@ DATA_PATH = "data/pumpkin_book.pdf"
 EMBEDDING_MODEL = "BAAI/bge-small-zh-v1.5"
 
 # Milvus向量库配置
-MILVUS_URI = "http://localhost:19530"
+MILVUS_URI = os.getenv("MILVUS_URI", "http://localhost:19530")
 COLLECTION_NAME = "research_assistant"
 
 # tavily联网搜索
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
 # Redis
-REDIS_URL = "redis://localhost:6379"   #redis就用redis协议，不是http
-REDIS_HOST = "localhost"
-REDIS_PORT = "6379"
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")   #redis就用redis协议，不是http
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+REDIS_PORT = os.getenv("REDIS_PORT", "6379")
 
 
 

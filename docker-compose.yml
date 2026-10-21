@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: research_assistant:latest
+    env_file:
+      - .env
+    environment:
+      # Milvus / Redis 跑在本机其他容器里、端口已发布到宿主机；
+      # 容器内的 localhost 是容器自己，必须经宿主机回连，故用 host.docker.internal
+      MILVUS_URI: http://host.docker.internal:19530
+      REDIS_HOST: host.docker.internal
+      REDIS_PORT: "6379"
+      REDIS_URL: redis://host.docker.internal:6379
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # Linux 上也能解析该域名
+    ports:
+      - "8000:8000"
+    volumes:
+      - hf_cache:/root/.cache/huggingface      # 持久化 Embedding 模型，重建容器不用重下
+    restart: unless-stopped
+  
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --url http://app:8000
+    depends_on:
+      - app
+    restart: unless-stopped
+
+volumes:
+  hf_cache:

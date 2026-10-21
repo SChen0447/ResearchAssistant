@@ -12,11 +12,10 @@ __pycache__/
 dist/
 build/
 
-# ---------- 虚拟环境 ----------
+# ---------- uv / 虚拟环境 ----------
 .venv/
 venv/
-env/
-ENV/
+# 注意：uv.lock、pyproject.toml、.python-version 需要提交，禁止加入忽略列表
 
 # ---------- 测试 / 类型检查 / 缓存 ----------
 .pytest_cache/
