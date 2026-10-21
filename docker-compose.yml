@@ -20,13 +20,6 @@ services:
     volumes:
       - hf_cache:/root/.cache/huggingface      # 持久化 Embedding 模型，重建容器不用重下
     restart: unless-stopped
-  
-  tunnel:
-    image: cloudflare/cloudflared:latest
-    command: tunnel --url http://app:8000
-    depends_on:
-      - app
-    restart: unless-stopped
 
 volumes:
   hf_cache:
