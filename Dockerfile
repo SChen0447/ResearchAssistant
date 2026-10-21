@@ -7,13 +7,13 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/app \
+    PYTHONPATH=/research_assistant \
     HF_ENDPOINT=https://hf-mirror.com \
     UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \
     UV_PYTHON_DOWNLOADS=0
 
-WORKDIR /app
+WORKDIR /research_assistant
 
 # 先只拷贝依赖清单：依赖不变时这层走缓存，重建镜像很快
 COPY pyproject.toml uv.lock ./
@@ -32,7 +32,7 @@ COPY frontend ./frontend
 COPY data ./data
 
 # 使用 uv 创建的虚拟环境
-ENV PATH="/app/.venv/bin:$PATH"
+ENV PATH="/research_assistant/.venv/bin:$PATH"
 
 EXPOSE 8000
 
