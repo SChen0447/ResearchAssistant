@@ -10,7 +10,13 @@ class AgentService:
         self.agent = build_agent()
 
     async def ask(self, question: str, user_id: str, session_id: str) -> str:
-        config = {"configurable": {"thread_id": session_id}}
+        config = {
+            "configurable": {"thread_id": session_id},
+            # LangSmith 追踪：便于按会话/用户筛选
+            "run_name": "research_assistant.ask",
+            "tags": ["research_assistant", "invoke"],
+            "metadata": {"user_id": user_id, "session_id": session_id},
+        }
         context = Context(user_id=user_id, session_id=session_id)
 
         output = await self.agent.ainvoke(
@@ -22,7 +28,12 @@ class AgentService:
 
     async def astream(self, question: str, user_id: str, session_id: str) -> AsyncIterator[str]:
         """流式输出：逐 token 产出模型的回答内容。"""
-        config = {"configurable": {"thread_id": session_id}}
+        config = {
+            "configurable": {"thread_id": session_id},
+            "run_name": "research_assistant.ask_stream",
+            "tags": ["research_assistant", "stream"],
+            "metadata": {"user_id": user_id, "session_id": session_id},
+        }
         context = Context(user_id=user_id, session_id=session_id)
 
         async for chunk, _meta in self.agent.astream(

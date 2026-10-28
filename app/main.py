@@ -6,6 +6,8 @@ from contextlib import asynccontextmanager
 from app.services.agent_service import AgentService
 from app.api.routes import router
 
+from prometheus_fastapi_instrumentator import Instrumentator
+
 # 把懒加载改成预热
 from app.tools.rag_tool import get_retriever
 import asyncio
@@ -21,6 +23,20 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+# 指标采集中间件；expose 必须在 mount 之前，否则 /metrics 会被静态挂载吃掉
+Instrumentator(
+    should_group_status_codes = False,        # 保留精确状态码，便于区分 4xx / 5xx
+    should_exclude_streaming_duration = True, # SSE 流式时长不计入 HTTP 延迟，避免 P95 被拖偏
+    should_instrument_requests_inprogress = True,
+    inprogress_labels = True,
+    excluded_handlers = [r"/research_assistant/metrics"],  # 不统计抓取端点自身
+).instrument(app).expose(
+    app,
+    endpoint = "/research_assistant/metrics",
+    include_in_schema = False,
+)
+
 
 app.include_router(router, prefix="/research_assistant")
 
